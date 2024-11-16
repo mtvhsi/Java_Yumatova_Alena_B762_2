@@ -10,15 +10,15 @@ class VectorR3 {
         this.y = y;
         this.z = z;
     }
-    //проверка на ортогональность
+    ////проверка на ортогональность
     public boolean isOrthogonal(VectorR3 other) {
         return dotProduct(other) == 0;
     }
-    //Скалярное произведение
+    ////скалярное произведение
     private double dotProduct(VectorR3 other) {
         return this.x * other.x + this.y * other.y + this.z * other.z;
     }
-    //лина вектора
+    ///длина вектора
     private double magnitude() {
         return Math.sqrt(x * x + y * y + z * z);
     }
@@ -26,22 +26,21 @@ class VectorR3 {
     public boolean compareMagnitude(VectorR3 other) {
         return Double.compare(this.magnitude(), other.magnitude()) == 0;
     }
-    //Пересекаются ли неортогональные и некопланарные векторы
+    ///Пересекаются ли неортогональные и некопланарные векторы
     public boolean intersects(VectorR3 other) {
-        // Если векторы не параллельны и не ортогональны, они считаются "пересекающаяся пара"
+        //проверка на пересекающуюяс пару
         return !this.isOrthogonal(other) && !this.isParallelTo(other);
     }
-    // Параллельность векторов
+    //паралельность веркторов
     public boolean isParallelTo(VectorR3 other) {
-        //gпроверяем пропорциональны ли компоненты
+        //gпроверяем пропорциональность
         double factorXY = this.x / other.x;
         double factorYZ = this.y / other.y;
         double factorZX = this.z / other.z;
         return Double.compare(factorXY, factorYZ) == 0 && Double.compare(factorYZ, factorZX) == 0;
     }
-    // Проверка на компланарность трех векторов
+    //проверка на компланарность трех векторов
     public static boolean areCoplanar(VectorR3 v1, VectorR3 v2, VectorR3 v3) {
-        //Вычислим смешанное произведение
         double mixedProduct = v1.x * (v2.y * v3.z - v2.z * v3.y) -
                 v1.y * (v2.x * v3.z - v2.z * v3.x) +
                 v1.z * (v2.x * v3.y - v2.y * v3.x);
@@ -49,8 +48,7 @@ class VectorR3 {
     }
     @Override
     public String toString() {
-        return "Vector(" + x + ", " + y + ", " + z + ")";
-    }
+        return "Vector(" + x + ", " + y + ", " + z + ")";}
 }
 public class Main {
     public static void main(String[] args) {
@@ -61,7 +59,6 @@ public class Main {
         vectors.add(new VectorR3(-1, -2, -3));
         vectors.add(new VectorR3(2, 4, 6));
         vectors.add(new VectorR3(1, 0, 0));
-        // Проверка на ортогональности и компланарности
         for (int i = 0; i < vectors.size(); i++) {
             for (int j = i + 1; j < vectors.size(); j++) {
                 VectorR3 v1 = vectors.get(i);
@@ -72,7 +69,6 @@ public class Main {
                         (v1.intersects(v2) ? " пересекаются" : " не пересекаются"));
             }
         }
-        //Определение компланарных векторов
         for (int i = 0; i < vectors.size(); i++) {
             for (int j = i + 1; j < vectors.size(); j++) {
                 for (int k = j + 1; k < vectors.size(); k++) {
