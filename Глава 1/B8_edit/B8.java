@@ -7,7 +7,7 @@ public class B8 {
         Scanner scanner = new Scanner(System.in);
         System.out.print("Введите количество чисел: ");
         int n = scanner.nextInt();
-        Integer[] numbers = new Integer[n];  // Используем Integer вместо int
+        Integer[] numbers = new Integer[n];
         System.out.println("Введите " + n + " чисел:");
         ////Заполнение массива
         for (int i = 0; i < n; i++) {
