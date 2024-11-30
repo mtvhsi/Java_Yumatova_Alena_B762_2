@@ -1,6 +1,8 @@
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Main {
 
@@ -14,7 +16,15 @@ public class Main {
         }
 
         System.out.println("\nСписки студентов для каждого факультета и курса:");
-        studentDatabase.printStudentsByFacultyAndCourse();
+        Map<String, List<Student>> studentsByFacultyAndCourse = studentDatabase.getStudentsByFacultyAndCourse();
+        for (Map.Entry<String, List<Student>> entry : studentsByFacultyAndCourse.entrySet()) {
+            String facultyAndCourse = entry.getKey();
+            List<Student> students = entry.getValue();
+            System.out.println(facultyAndCourse + ":");
+            for (Student student : students) {
+                System.out.println(student);
+            }
+        }
 
         System.out.println("\nСтуденты, родившиеся после 2000 года:");
         for (Student student : studentDatabase.getStudentsBornAfterYear(2000)) {
@@ -102,17 +112,23 @@ class StudentDatabase {
         return result;
     }
 
-    public void printStudentsByFacultyAndCourse() {
+    public Map<String, List<Student>> getStudentsByFacultyAndCourse() {
+        Map<String, List<Student>> result = new HashMap<>();
         for (String faculty : Arrays.asList("ФКНТ", "МСФ", "СФ", "ФСТД", "ФЭУ", "ТК", "ИПИБ")) {
             for (int course = 1; course <= 4; course++) {
-                System.out.println("Факультет: " + faculty + ", Курс: " + course);
+                String key = "Факультет: " + faculty + ", Курс: " + course;
+                List<Student> studentsInCourse = new ArrayList<>();
                 for (Student student : students) {
                     if (student.getFaculty().equals(faculty) && student.getCourse() == course) {
-                        System.out.println(student);
+                        studentsInCourse.add(student);
                     }
+                }
+                if (!studentsInCourse.isEmpty()) {
+                    result.put(key, studentsInCourse);
                 }
             }
         }
+        return result;
     }
 
     public List<Student> getStudentsBornAfterYear(int year) {
